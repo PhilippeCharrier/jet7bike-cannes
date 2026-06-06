@@ -40,6 +40,7 @@
 }
 
 * { box-sizing: border-box; }
+html, body { overflow-x: hidden; max-width: 100%; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -85,7 +86,7 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
 /* ---------- Header ---------- */
 .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.82);
   backdrop-filter: saturate(180%) blur(18px); border-bottom: 1px solid var(--line); }
-.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px; }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 850; letter-spacing: -.02em; font-size: 1.15rem; }
 .brand .spark { color: var(--accent); }
 .brand small { font-weight: 600; color: var(--muted); font-size: .72rem; letter-spacing: .04em; }
@@ -227,13 +228,24 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .gallery .g-big,.gallery .g-sm,.gallery .g-half { grid-column: span 12; }
   .nav-links { display:none; }
-  .burger { display:flex; }
+  .burger { display:flex; order: 3; }
+  /* Header mobile : éviter le débordement du CTA */
+  .nav { gap: 8px; }
+  .nav-cta { gap: 6px; }
+  .nav-cta .btn--primary { padding: 10px 16px; font-size: .9rem; white-space: nowrap; }
+  .brand { font-size: 1.05rem; }
+  .brand small { display: none; }
   .nav-links.open { display:flex; position:absolute; top:64px; left:0; right:0; flex-direction:column; background:#fff; padding:20px; border-bottom:1px solid var(--line); gap:18px; }
 }
 @media (max-width: 560px) {
   .cat-grid { grid-template-columns: 1fr; }
   .form .row { grid-template-columns: 1fr; }
   .sticky-cta { display:flex; }
+  /* Très petit écran (≤360px) : le CTA texte du header devient une icône compacte.
+     La conversion reste assurée par la sticky bar en bas + le burger. */
+  .nav-cta .btn--primary { font-size: 0; padding: 10px 12px; gap: 0; }
+  .nav-cta .btn--primary::before { content: "🏁"; font-size: 1.05rem; }
+  .nav-cta .btn--line { padding: 9px 11px; }
   .trust { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .fab-wa { bottom: 84px; }
